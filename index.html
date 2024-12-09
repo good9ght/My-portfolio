@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno.exe</title>
+    <style>
+        /* Estilização geral */
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo do menu */
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #001100;
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #00FF00;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00AA00;
+        }
+
+        /* Alinhamento e espaçamento */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 20px;
+            line-height: 1.6;
+            text-align: justify;
+            opacity: 0;
+            position: relative;
+        }
+
+        /* Efeito de texto piscando */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+       
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html">Uma breve história sobre mim</a>
+        <a href="formacao.html">Formação</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="contato.html">Contato</a>
+    </div>
+
+    <h1>Uma breve história sobre mim</h1>
+    <br>
+    <div id="content">
+        <p>Me chamo Bruno Anderson Silva Vieira, tenho 25 anos e sou pai de duas feras felinas. Sou formado em Eletrotécnica no Instituto Federal do Ceará (Campus 13 de Maio), onde iniciei meus estudos em 2016 e finalizei no final de 2023. Durante esse período, passei por desafios que moldaram quem sou hoje. Ao mesmo tempo, foi um grande teste de paciência, pois percebi que o curso não era o que eu desejava seguir como carreira. A duração oficial do curso era de 2 anos e 5 meses, mas eu levei 7 anos para concluí-lo. Neste texto, explicarei as razões por trás dessa trajetória incomum e os aprendizados que tive pelo caminho.</p>
+
+        <p>Em 2016, quando entrei no curso, ainda estava no terceiro ano do Ensino Médio, estudando à tarde no Colégio Lourenço Filho, no Centro. Foi um momento de grande felicidade para mim e minha mãe, pois passar em uma instituição federal era algo significativo. No entanto, conciliar o colégio com o curso técnico, que era praticamente uma engenharia elétrica resumida, foi mais difícil do que imaginei. O curso era à noite, e eu tinha que sair da escola por volta das 18h para chegar ao IFCE às 18h30. Apesar da rotina cansativa e dos desafios, naquele início, eu ainda gostava muito do curso e acreditava estar no caminho certo.</p>
+
+        <p>Com o tempo, percebi que, por mais que me interessasse por eletrônica e alta potência, o curso não era para mim. Isso ficou evidente nas minhas notas e no desempenho nos estágios, que não foram dos melhores. Mesmo assim, por pressão familiar e falta de coragem para mudar de curso, decidi insistir. Chegou então o período da pandemia de Covid-19, e como para muitos, foi um momento de sair da zona de conforto. Avancei em várias disciplinas difíceis com a ajuda de colegas, pois nos organizávamos para resolver os testes em equipe. Apesar disso, minha relação com o curso era de frustração e dúvidas constantes sobre meu futuro.</p>
+
+        <p>O ponto de virada aconteceu no último estágio, em 2022, onde trabalhei com o conserto de placas de ar-condicionado. Logo no início, percebi que seria um desafio. Além de enfrentar uma placa problemática que rompia trilhas facilmente, o ambiente era marcado por polarização política. Eu, sendo estudante de federal e identificado como de esquerda (mesmo não adotando políticos), me encontrava em um ambiente onde o dono e muitos funcionários eram de extrema direita. Apesar das dificuldades, permaneci na esperança de ser efetivado. Trabalhei além do horário contratado, acreditando que isso faria diferença, mas o esforço não foi reconhecido.</p>
+
+        <p>Quando saí, não nego que passei por um período difícil, especialmente no primeiro semestre. Essa fase me deixou para baixo e acabou dificultando tanto minha busca por emprego quanto a conclusão do curso. No segundo semestre, consegui me reerguer. Faltava apenas uma cadeira, uma das mais difíceis, para concluir minha formação. Finalmente, no final do ano, consegui me formar, mas admito que senti um vazio quando terminei. O ano de 2024 chegou, e, por um tempo, fiquei sem rumo, sem saber o que fazer. Porém, com o apoio dos meus amigos e da minha mãe, decidi investir em um ensino superior. Apesar de estar desempregado há dois anos, hoje, há seis meses, estou cursando algo que sempre quis: Análise e Desenvolvimento de Sistemas, na Universidade Uninter. Esse passo renovou minha motivação e abriu novos horizontes para mim.</p>
+    </div>
+    <div class="cursor"></div>
+      
+    <script>
+        let currentIndex = 0;
+        let isTyping = false;
+        let cursor;
+
+        function typeParagraphs() {
+            const paragraphs = document.querySelectorAll("#content p");
+            cursor = document.querySelector(".cursor");
+
+            function typeText(p) {
+                let text = p.textContent;
+                p.textContent = "";
+                p.style.opacity = 1;
+                isTyping = true;
+
+                let i = 0;
+                const typing = setInterval(() => {
+                    if (i < text.length) {
+                        p.textContent += text.charAt(i);
+                        
+                        cursor.style.position = 'absolute';
+                        cursor.style.left = '100%';
+                        cursor.style.display = 'inline-block';
+                        
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                        isTyping = false;
+                        currentIndex++;
+                        if (currentIndex < paragraphs.length) {
+                            setTimeout(() => typeText(paragraphs[currentIndex]), 2000);
+                        }
+                    }
+                }, 30);
+            }
+
+            typeText(paragraphs[currentIndex]);
+
+            document.addEventListener("keydown", (e) => {
+                if ((e.key === " " || e.key === "Enter") && isTyping) {
+                    const p = paragraphs[currentIndex];
+                    p.textContent = p.getAttribute("data-full-text");
+                    
+                    cursor.style.position = 'absolute';
+                    cursor.style.left = '100%';
+                    cursor.style.display = 'inline-block';
+                    
+                    isTyping = false;
+                    currentIndex++;
+                    if (currentIndex < paragraphs.length) {
+                        setTimeout(() => typeText(paragraphs[currentIndex]), 2000);
+                    }
+                }
+            });
+        }
+
+        window.onload = () => {
+            const paragraphs = document.querySelectorAll("#content p");
+            paragraphs.forEach(p => p.setAttribute("data-full-text", p.textContent));
+            typeParagraphs();
+        };
+    </script>
+    
+</body>
+</html>
