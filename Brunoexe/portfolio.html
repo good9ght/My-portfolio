@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno.exe</title>
+    <style>
+        /* Estilização geral */
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo do menu */
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #001100;
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #00FF00;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00AA00;
+        }
+
+        /* Alinhamento e espaçamento */
+        h1,h2,h5 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 20px;
+            line-height: 1.6;
+            text-align: justify;
+            opacity: 1;
+            position: relative;
+        }
+
+        /* Efeito de texto piscando */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html">Uma breve história sobre mim</a>
+        <a href="formacao.html">Formação</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="contato.html">Contato</a>
+    </div>
+    <h1>Portfólio</h1>
+    <br>
+    <div id="content">
+        <ul>
+            <li>Balconista(Jan 2017 - Fev 2019)</li>
+            <ul>
+                <li>TonTon Autopeças</li>
+                <ul>
+                    <li>R.Treze,75 - Parque Dois Irmãos,Fortaleza - CE,60761-370</li>
+                </ul>
+            </ul>
+        </ul>
+        <br>
+        <ul>
+            <li>Estagiário(Mar 2019 - Dez 2019)</li>
+            <ul>
+                <li>Lw informática</li>
+                <ul>
+                    <li>Carlos Ribeiro,578 - Fátima,Fortaleza - CE,60040-420</li>
+                </ul>
+            </ul>
+        </ul>
+        <br>
+        <ul>
+        <li>Estagiário(Mar 2020 - Dez 2020)</li>
+            <ul>
+                <li>Mills Solaris</li>
+                <ul>
+                    <li>BR-116, 5360, A-KM 14-Pedras,Fortaleza-CE,60874-502</li>
+                </ul>
+            </ul>
+        </ul>
+        <br>
+        <ul>
+        <li>Estagiário(Mar 2020 - Dez 2020)</li>
+            <ul>
+                <li>Apiguana</li>
+                <ul>
+                    <li>Av. Duque de Caxias, 901 - Centro, Fortaleza - CE,60035-111</li>
+                </ul>
+            </ul>
+        </ul>
+        <br>
+        <ul>
+        <li>Estagiário(Agosto 2022 - Janeiro 2023)</li>
+            <ul>
+                <li>LawTeck</li>
+                <ul>
+                    <li>R. Álvaro Fernandes, 244 A - Bela Vista, Fortaleza - CE,60420-570</li>
+                </ul>
+            </ul>
+        </ul>
+        <br>
+        <h1>Projetos</h1>
+        <br>
+        <br>
+        <h2>Wagou game estudio</h2>
+        <h5>Yuki Sussurros da mata</h5>
+        <br>
+        <p>Atualmente estou trabalhando junto com amigos na criação de um jogo plataforma 2D. Sou o programador da movimentação e da física(Gdscript4), tanto da personagem principal como dos inimigos e do mundo.</p>
+
+
+
+    </div>
+    <div class="cursor"></div>
+    <script>
+              let currentLevelIndex = 0;
+        let currentListIndex = 0;
+        let isTyping = false;
+        let cursor;
+
+    function typeListItems() {
+    const lists = document.querySelectorAll("#content > ul");
+    cursor = document.querySelector(".cursor");
+
+    function typeListItem(list) {
+        const listItems = list.querySelectorAll("li");
+        
+        if (currentLevelIndex < listItems.length) {
+            let currentItem = listItems[currentLevelIndex];
+            let text = currentItem.textContent;
+            currentItem.textContent = "";
+            currentItem.style.opacity = 1;
+            isTyping = true;
+
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    currentItem.textContent += text.charAt(i);
+                    
+                    cursor.style.position = 'absolute';
+                    cursor.style.left = '100%';
+                    cursor.style.display = 'inline-block';
+                    
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    isTyping = false;
+                    currentLevelIndex++;
+
+                    if (currentLevelIndex < listItems.length) {
+                        setTimeout(() => typeListItem(list), 500);
+                    } else {
+                        currentLevelIndex = 0;
+                        currentListIndex++;
+
+                        if (currentListIndex < lists.length) {
+                            setTimeout(() => typeListItem(lists[currentListIndex]), 1000);
+                        }
+                    }
+                }
+            }, 30);
+        }
+    }
+
+    typeListItem(lists[currentListIndex]);
+
+    document.addEventListener("keydown", (e) => {
+        if ((e.key === " " || e.key === "Enter") && isTyping) {
+            const lists = document.querySelectorAll("#content > ul");
+            const currentList = lists[currentListIndex];
+            const listItems = currentList.querySelectorAll("li");
+            const currentItem = listItems[currentLevelIndex];
+
+            currentItem.textContent = currentItem.getAttribute("data-full-text");
+            
+            cursor.style.position = 'absolute';
+            cursor.style.left = '100%';
+            cursor.style.display = 'inline-block';
+            
+            isTyping = false;
+            currentLevelIndex++;
+
+            if (currentLevelIndex < listItems.length) {
+                setTimeout(() => typeListItem(currentList), 500);
+            } else {
+                currentLevelIndex = 0;
+                currentListIndex++;
+
+                if (currentListIndex < lists.length) {
+                    setTimeout(() => typeListItem(lists[currentListIndex]), 1000);
+                }
+            }
+        }
+    });
+}
+
+window.onload = () => {
+    const lists = document.querySelectorAll("#content > ul li");
+    lists.forEach(li => {
+        li.setAttribute("data-full-text", li.textContent);
+        li.style.opacity = 0;
+    });
+    typeListItems();
+};
+    </script>
+    
+
+</body>
+</html>

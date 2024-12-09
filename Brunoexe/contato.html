@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno.exe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Existing styles */
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Boot screen styles */
+        #boot-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+
+        #loading-text {
+            text-align: center;
+        }
+
+        #loading-bar {
+            width: 300px;
+            height: 20px;
+            border: 2px solid #00FF00;
+            margin-top: 20px;
+        }
+
+        #loading-progress {
+            width: 0;
+            height: 100%;
+            background-color: #00FF00;
+        }
+
+        /* Existing menu and form styles remain the same */
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: #001100;
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #00FF00;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #00AA00;
+        }
+
+        .contact-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #001100;
+            border: 2px solid #00FF00;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+        }
+
+        .send-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            font-family: 'Press Start 2P', monospace;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background-color: #00AA00;
+        }
+
+        /* Hide content until boot complete */
+        .main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="boot-screen">
+        <div id="loading-text">Inicializando sistema...</div>
+        <div id="loading-bar">
+            <div id="loading-progress"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="menu">
+            <a href="index.html">Uma breve história sobre mim</a>
+            <a href="formacao.html">Formação</a>
+            <a href="portfolio.html">Portfólio</a>
+            <a href="contato.html">Contato</a>
+        </div>
+
+        <div class="contact-container">
+            <form>
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Empresa:</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensagem:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="send-button">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bootScreen = document.getElementById('boot-screen');
+            const loadingProgress = document.getElementById('loading-progress');
+            const mainContent = document.querySelector('.main-content');
+            const loadingText = document.getElementById('loading-text');
+
+            const bootSequence = [
+                { text: "Inicializando sistema...", progress: 25 },
+                { text: "Carregando módulos...", progress: 50 },
+                { text: "Verificando componentes...", progress: 75 },
+                { text: "Sistema pronto.", progress: 100 }
+            ];
+
+            function simulateBoot() {
+                bootSequence.forEach((stage, index) => {
+                    setTimeout(() => {
+                        loadingText.textContent = stage.text;
+                        loadingProgress.style.width = `${stage.progress}%`;
+
+                        if (index === bootSequence.length - 1) {
+                            setTimeout(() => {
+                                bootScreen.style.display = 'none';
+                                mainContent.style.display = 'block';
+                            }, 500);
+                        }
+                    }, index * 1000);
+                });
+            }
+
+            simulateBoot();
+        });
+    </script>
+</body>
+</html>
